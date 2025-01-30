@@ -4,7 +4,39 @@ import bs4
 from bs4 import BeautifulSoup
 import streamlit.components.v1 as components
 
-st.header("DITTO — Duplicating Information To Transform Optimisations")
+TITLE = "DITTO — Duplicating Information To Transform Optimisations"
+
+st.set_page_config(page_title=TITLE)
+st.header(TITLE)
+
+st.sidebar.subheader("Helpful info")
+
+with st.sidebar.expander("How to use DITTO 👛", expanded=False):
+
+	st.markdown(
+		"""
+		Enter the URL of the page you want to copy and paste unstyled text from or upload a HTML file.
+
+		"""
+    )
+
+with st.sidebar.expander("Things to 🐻 in mind", expanded=False):
+
+	st.markdown(
+		"""
+		- As not all webpages are set up the same, you might find it challenging to copy and paste text from a page—or not at all.
+		- Text may not be completely unstyled but I will endeavour to include different elements to strip out. If you spot anything that keeps coming up, please let me know.
+
+		"""
+    )
+
+with st.sidebar.expander("Credits 🏆", expanded=False):
+
+	st.markdown(
+		"""
+		DITTO was created by [Luke Davis](https://lukealexdavis.co.uk/). If you have any feedback or find any bugs, please let me know.
+	    """
+	)
 
 def get_soup(url):
 	res = requests.get(url)
@@ -35,7 +67,7 @@ def remove_attrs(soup):
 	return soup
 
 webpage = st.text_input("Enter a webpage to extract")
-html_file = st.file_uploader("Upload your HTML file", type="html", accept_multiple_files=False)
+html_file = st.file_uploader("Or upload your HTML file", type="html", accept_multiple_files=False)
 submit = st.button("Submit")
 
 if html_file and submit:
