@@ -9,6 +9,10 @@ TITLE = "DITTO — Duplicating Information To Transform Optimisations"
 st.set_page_config(page_title=TITLE)
 st.header(TITLE)
 
+headers = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+}
+
 st.sidebar.subheader("Helpful info")
 
 with st.sidebar.expander("How to use DITTO 👛", expanded=False):
@@ -39,9 +43,12 @@ with st.sidebar.expander("Credits 🏆", expanded=False):
 	)
 
 def get_soup(url):
-	res = requests.get(url)
-	soup = BeautifulSoup(res.content, 'html.parser')
-	return soup
+	try:
+		res = requests.get(url, headers=headers)
+		soup = BeautifulSoup(res.content, 'html.parser')
+		return soup
+	except Exception as e:
+		st.error(e)
 
 def remove_tags(soup):
     for data in soup(['style', 'script']):
